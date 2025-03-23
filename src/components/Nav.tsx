@@ -51,19 +51,40 @@ export default function Nav() {
                     Data Loading
                   </A>
                 </li>
-
-                <li>
-                  <A
-                    class="text-gray-500 transition hover:text-gray-500/75"
-                    classList={{
-                      "text-teal-600 hover:text-teal-600/75":
-                        active("/actions"),
-                    }}
-                    href="/actions"
-                  >
+                <div class="dropdown">
+                  <div tabindex="0" role="button" class="btn m-1 btn-ghost">
                     Actions
-                  </A>
-                </li>
+                  </div>
+                  <ul
+                    tabindex="0"
+                    class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                  >
+                    <li>
+                      <A
+                        class="text-gray-500 transition hover:text-gray-500/75"
+                        classList={{
+                          "text-teal-600 hover:text-teal-600/75":
+                            active("/actions"),
+                        }}
+                        href="/actions-register"
+                      >
+                        Register
+                      </A>
+                    </li>
+                    <li>
+                      <A
+                        class="text-gray-500 transition hover:text-gray-500/75"
+                        classList={{
+                          "text-teal-600 hover:text-teal-600/75":
+                            active("/actions"),
+                        }}
+                        href="/actions-login"
+                      >
+                        Login
+                      </A>
+                    </li>
+                  </ul>
+                </div>
 
                 <li>
                   <a

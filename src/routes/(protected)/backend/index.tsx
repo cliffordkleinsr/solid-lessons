@@ -1,17 +1,16 @@
 import { createAsync, query, redirect, RouteDefinition } from "@solidjs/router";
 import { getSession } from "~/apis/auth";
+import Loader from "~/components/Loader";
 
-const alloWed = query(async () => {
+const pageLoad = query(async () => {
   "use server";
   const session = await getSession();
-  if (!session) throw redirect("/");
-}, "");
-
-export const route = {
-  preload: () => alloWed(),
-} satisfies RouteDefinition;
+  if (!session.data.user) {
+    return redirect("/");
+  }
+}, "pageload");
 export default function backend() {
-  createAsync(() => alloWed());
+  createAsync(() => pageLoad());
   return (
     <>
       <p>Welcome to the backend</p>

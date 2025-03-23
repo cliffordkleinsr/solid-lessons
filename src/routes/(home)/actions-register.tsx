@@ -1,12 +1,9 @@
 import { action, useSubmission } from "@solidjs/router";
 import { Component, Show } from "solid-js";
 import { registerUser } from "~/apis/auth";
+import Loading from "~/components/Loader";
 
-const Loading: Component<{}> = (props) => {
-  return <span class="loading loading-bars loading-xs"></span>;
-};
-
-export default function Actions() {
+export default function ActionsRegister() {
   const submission = useSubmission(registerUser);
   return (
     <>

@@ -5,3 +5,5 @@ export const usersTable = sqliteTable("users", {
   name: text().notNull(),
   password: text().notNull().unique(),
 });
+
+export type UserInsert = typeof usersTable.$inferInsert;

@@ -1,7 +1,8 @@
-import { action, redirect } from "@solidjs/router";
+import { action, query, redirect } from "@solidjs/router";
 import { useSession } from "vinxi/http";
 import { db } from "~/db";
 import { usersTable } from "~/db/schema";
+import { inserUser, retUser, userExists } from "./db-utils";
 
 export interface SessionData {
   user: string | undefined | null;
@@ -18,22 +19,28 @@ export function getSession() {
   });
 }
 
+/**
+ * Form Action to register a user
+ */
 export const registerUser = action(async (formData: FormData) => {
   "use server";
-  const data = Object.fromEntries(formData);
+  const data = Object.fromEntries(formData) as Registration;
   if (data.name === "" && data.password === "") {
     return {
       error: "Fields must not be empty",
     };
   }
 
-  const { name, password } = data as Registration;
+  const { name } = data;
+  const exists = await userExists(name);
+  if (exists) {
+    return {
+      error: "The User already Exists",
+    };
+  }
   try {
     // add the user
-    // await db.insert(usersTable).values({
-    //   name: name as string,
-    //   password: password as string,
-    // });
+    await inserUser(data);
     // create a session
     const session = await getSession();
     await session.update({ user: name });
@@ -44,6 +51,36 @@ export const registerUser = action(async (formData: FormData) => {
   }
   throw redirect("/backend");
 }, "registerUser");
+
+/**
+ * Form Action to sign in a user
+ */
+export const loginUser = action(async (formData: FormData) => {
+  "use server";
+  const data = Object.fromEntries(formData);
+  if (data.name === "" && data.password === "") {
+    return {
+      error: "Fields must not be empty",
+    };
+  }
+  const { name, password } = data as Registration;
+  const [user, exists] = await retUser(name);
+  if (!exists) {
+    return {
+      error: "User does not exist, please try again",
+    };
+  }
+
+  if (user.password !== password) {
+    return {
+      error: "You have entered the wrong password, please try again",
+    };
+  }
+
+  const session = await getSession();
+  await session.update({ user: name });
+  throw redirect("/backend");
+}, "loginUser");
 
 export async function logout() {
   "use server";
@@ -57,4 +94,3 @@ export async function getUser() {
   const session = await getSession();
   return session?.data?.user;
 }
-
