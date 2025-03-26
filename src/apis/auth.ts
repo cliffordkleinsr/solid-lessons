@@ -51,7 +51,9 @@ export const registerUser = action(async (formData: FormData) => {
       error: err as string,
     };
   }
-  throw redirect("/backend");
+  throw redirect("/backend", {
+    headers: setFlashCookieHeader("User Registered", "success"),
+  });
 }, "registerUser");
 
 /**
@@ -84,9 +86,8 @@ export const loginUser = action(async (formData: FormData) => {
 
   const event = getRequestEvent();
 
-  const headers = setFlashCookieHeader("Logged in", "success");
   throw redirect("/backend", {
-    headers: headers,
+    headers: setFlashCookieHeader("Logged in", "success"),
   });
 }, "loginUser");
 
@@ -94,7 +95,9 @@ export async function logout() {
   "use server";
   const session = await getSession();
   await session.update({ user: null! });
-  throw redirect("/");
+  throw redirect("/", {
+    headers: setFlashCookieHeader("Logged out", "info"),
+  });
 }
 
 export async function getUser() {

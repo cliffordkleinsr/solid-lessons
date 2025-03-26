@@ -1,8 +1,12 @@
 import { eventHandler } from "vinxi/http";
 
+("use server");
 export default eventHandler({
   handler() {},
   websocket: {
+    async upgrade(req) {
+      console.log("upgrade");
+    },
     async open(peer) {
       console.log("open", peer.id);
     },

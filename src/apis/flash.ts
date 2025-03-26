@@ -7,7 +7,7 @@ import { getCookie, HTTPEvent } from "vinxi/http";
 export const setFlashCookieHeader = (
   message: string,
   type: string,
-): Headers => {
+): ResponseInit["headers"] => {
   const headers = new Headers({
     "Set-Cookie": `flash=${message}|${type}; Max-Age=5`,
   });
@@ -40,6 +40,9 @@ export const setFlash = (flash: string | undefined) => {
         break;
       case type == "error":
         timer = setTimeout(() => toast.error(message), 100);
+        break;
+      case type == "info":
+        timer = setTimeout(() => toast.info(message), 100);
         break;
       default:
         break;
