@@ -3,6 +3,8 @@ import { useSession } from "vinxi/http";
 import { db } from "~/db";
 import { usersTable } from "~/db/schema";
 import { inserUser, retUser, userExists } from "./db-utils";
+import { getRequestEvent } from "solid-js/web";
+import { setFlashCookieHeader } from "./flash";
 
 export interface SessionData {
   user: string | undefined | null;
@@ -79,7 +81,13 @@ export const loginUser = action(async (formData: FormData) => {
 
   const session = await getSession();
   await session.update({ user: name });
-  throw redirect("/backend");
+
+  const event = getRequestEvent();
+
+  const headers = setFlashCookieHeader("Logged in", "success");
+  throw redirect("/backend", {
+    headers: headers,
+  });
 }, "loginUser");
 
 export async function logout() {

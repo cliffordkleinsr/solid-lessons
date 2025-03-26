@@ -2,16 +2,25 @@ import {
   A,
   action,
   createAsync,
-  redirect,
   RouteSectionProps,
   useAction,
 } from "@solidjs/router";
-import { createEffect, createResource } from "solid-js";
+import { createEffect, onCleanup } from "solid-js";
+import { toast } from "solid-sonner";
+
 import { getUser, logout } from "~/apis/auth";
+import { getStatus, setFlash } from "~/apis/flash";
 import ModeToggle from "~/components/ModeToggle";
 
 export default function ProtectedLayout(props: RouteSectionProps) {
   const user = createAsync(() => getUser());
+  const flash = createAsync(() => getStatus());
+
+  createEffect(() => {
+    const timer = setFlash(flash());
+    onCleanup(() => clearTimeout(timer));
+  });
+
   const logoutAction = useAction(action(logout));
   return (
     <>
