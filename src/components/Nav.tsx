@@ -1,6 +1,7 @@
 import { A, useLocation } from "@solidjs/router";
 import { Component } from "solid-js";
 import ModeToggle from "./ModeToggle";
+import Dropdown from "./Dropdown";
 
 export default function Nav() {
   const location = useLocation();
@@ -51,49 +52,50 @@ export default function Nav() {
                     Data Loading
                   </A>
                 </li>
-                <div class="dropdown">
-                  <div tabindex="0" role="button" class="btn m-1 btn-ghost">
-                    Actions
-                  </div>
-                  <ul
-                    tabindex="0"
-                    class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-                  >
-                    <li>
-                      <A
-                        class="text-gray-500 transition hover:text-gray-500/75"
-                        classList={{
-                          "text-teal-600 hover:text-teal-600/75":
-                            active("/actions"),
-                        }}
-                        href="/actions-register"
-                      >
-                        Register
-                      </A>
-                    </li>
-                    <li>
-                      <A
-                        class="text-gray-500 transition hover:text-gray-500/75"
-                        classList={{
-                          "text-teal-600 hover:text-teal-600/75":
-                            active("/actions"),
-                        }}
-                        href="/actions-login"
-                      >
-                        Login
-                      </A>
-                    </li>
-                  </ul>
-                </div>
-
-                <li>
-                  <a
-                    class="text-gray-500 transition hover:text-gray-500/75"
-                    href="/socket"
-                  >
-                    Websockets
-                  </a>
-                </li>
+                <Dropdown name="Actions">
+                  <li>
+                    <A
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      classList={{
+                        "text-teal-600 hover:text-teal-600/75":
+                          active("/actions"),
+                      }}
+                      href="/actions-register"
+                    >
+                      Register
+                    </A>
+                  </li>
+                  <li>
+                    <A
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      classList={{
+                        "text-teal-600 hover:text-teal-600/75":
+                          active("/actions"),
+                      }}
+                      href="/actions-login"
+                    >
+                      Login
+                    </A>
+                  </li>
+                </Dropdown>
+                <Dropdown name="VanillaJS">
+                  <li>
+                    <a
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      href="/vanilla/activetable"
+                    >
+                      Active table
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      href="/vanilla/charts "
+                    >
+                      D3 Charts
+                    </a>
+                  </li>
+                </Dropdown>
 
                 <li>
                   <a

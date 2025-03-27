@@ -9,7 +9,7 @@ export const setFlashCookieHeader = (
   type: string,
 ): ResponseInit["headers"] => {
   const headers = new Headers({
-    "Set-Cookie": `flash=${message}|${type}; Max-Age=5`,
+    "Set-Cookie": `flash=${message}_${type}; Max-Age=5`,
   });
   return headers;
 };
@@ -31,8 +31,8 @@ export const getStatus = query(async () => {
  */
 export const setFlash = (flash: string | undefined) => {
   if (flash) {
-    const message = flash?.split("|")[0];
-    const type = flash?.split("|")[1];
+    const message = flash?.split("_")[0];
+    const type = flash?.split("_")[1];
     let timer;
     switch (true) {
       case type === "success":
