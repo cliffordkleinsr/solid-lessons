@@ -1,6 +1,6 @@
 import { MetaProvider } from "@solidjs/meta";
 import { createAsync, RouteSectionProps } from "@solidjs/router";
-import { createEffect, onCleanup } from "solid-js";
+import { createEffect, onCleanup, Show } from "solid-js";
 import { getStatus, setFlash } from "~/apis/flash";
 import Nav from "~/components/Nav";
 

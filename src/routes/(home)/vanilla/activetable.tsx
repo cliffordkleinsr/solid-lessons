@@ -1,6 +1,7 @@
 import { ActiveTable } from "active-table";
 import "active-table";
 import { Suspense } from "solid-js";
+import Loader from "~/components/Loader";
 
 declare module "solid-js" {
   namespace JSX {
@@ -23,7 +24,7 @@ export default function AGTable() {
     <>
       <div class="place-items-center py-15">
         <div>
-          <Suspense>
+          <Suspense fallback={<Loader />}>
             <active-table
               tableStyle={{
                 borderRadius: "10px",

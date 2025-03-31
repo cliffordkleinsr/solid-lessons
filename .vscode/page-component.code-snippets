@@ -1,0 +1,17 @@
+{
+  "Solid Functional Component": {
+    "prefix": "sfc",
+    "body": [
+      "",
+      "export default function ${1:name} (props:any) {",
+      "  return (",
+      "    <>",
+      "      $2",
+      "    </>",
+      "  )",
+      "};",
+      "",
+    ],
+    "description": "Solid Functional Component",
+  },
+}

@@ -1,15 +1,17 @@
 import { query } from "@solidjs/router";
+import { FetchEvent } from "bun";
 import { createEffect } from "solid-js";
 import { getRequestEvent } from "solid-js/web";
 import { toast } from "solid-sonner";
-import { getCookie, HTTPEvent } from "vinxi/http";
+import { getCookie, getEvent, HTTPEvent } from "vinxi/http";
 
 export const setFlashCookieHeader = (
   message: string,
   type: string,
+  age: string = "5",
 ): ResponseInit["headers"] => {
   const headers = new Headers({
-    "Set-Cookie": `flash=${message}_${type}; Max-Age=5`,
+    "Set-Cookie": `flash=${message}_${type}; Max-Age=${age}`,
   });
   return headers;
 };
@@ -18,9 +20,10 @@ export const setFlashCookieHeader = (
  */
 export const getStatus = query(async () => {
   "use server";
-  const event = getRequestEvent();
-  const flash = getCookie(event?.nativeEvent as HTTPEvent, "flash");
-
+  const fetchEvent = getRequestEvent();
+  const event = fetchEvent?.nativeEvent as HTTPEvent;
+  const flash = getCookie(event, "flash");
+  // console.log(flash)
   return flash;
 }, "flash");
 

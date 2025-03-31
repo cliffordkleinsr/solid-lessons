@@ -1,7 +1,6 @@
-import { Link, Title } from "@solidjs/meta";
+import { Title } from "@solidjs/meta";
 import { A } from "@solidjs/router";
 import { Component } from "solid-js";
-import Counter from "~/components/Counter";
 
 const Hero: Component<{}> = (props) => {
   return (

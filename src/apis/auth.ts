@@ -5,6 +5,8 @@ import { usersTable } from "~/db/schema";
 import { inserUser, retUser, userExists } from "./db-utils";
 import { getRequestEvent } from "solid-js/web";
 import { setFlashCookieHeader } from "./flash";
+import { loginschema } from "./schemas";
+import { ZodError } from "zod";
 
 export interface SessionData {
   user: string | undefined | null;
@@ -27,6 +29,7 @@ export function getSession() {
 export const registerUser = action(async (formData: FormData) => {
   "use server";
   const data = Object.fromEntries(formData) as Registration;
+
   if (data.name === "" && data.password === "") {
     return {
       error: "Fields must not be empty",
@@ -62,6 +65,7 @@ export const registerUser = action(async (formData: FormData) => {
 export const loginUser = action(async (formData: FormData) => {
   "use server";
   const data = Object.fromEntries(formData);
+
   if (data.name === "" && data.password === "") {
     return {
       error: "Fields must not be empty",
@@ -105,3 +109,35 @@ export async function getUser() {
   const session = await getSession();
   return session?.data?.user;
 }
+
+export const superLogin = action(async (formData: FormData) => {
+  "use server";
+  const data = Object.fromEntries(formData);
+  const result = loginschema.safeParse(data);
+
+  if (!result.success) {
+    const err = result.error.flatten().fieldErrors;
+    return {
+      error: err,
+    };
+  }
+
+  const { name, password } = result.data;
+  const [user, exists] = await retUser(name);
+  if (!exists) {
+    return {
+      error: "User does not exist",
+    };
+  }
+  if (user.password !== password) {
+    return {
+      error: "You have entered the wrong password, please try again",
+    };
+  }
+  const session = await getSession();
+  await session.update({ user: name });
+
+  throw redirect("/backend", {
+    headers: setFlashCookieHeader("Logged in", "success"),
+  });
+}, "superLogin");

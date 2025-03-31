@@ -1,9 +1,5 @@
-import { createAsync, query, redirect, RouteDefinition } from "@solidjs/router";
-import { getRequestEvent } from "solid-js/web";
+import { createAsync, query, redirect } from "@solidjs/router";
 import { getSession } from "~/apis/auth";
-import { getCookie, HTTPEvent, parseCookies } from "vinxi/http";
-import Loader from "~/components/Loader";
-import { createEffect } from "solid-js";
 
 const pageLoad = query(async () => {
   "use server";

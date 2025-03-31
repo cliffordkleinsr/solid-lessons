@@ -1,6 +1,7 @@
 import { createAsync, RouteDefinition } from "@solidjs/router";
 import { Component, For, Suspense } from "solid-js";
 import { getUsers } from "~/apis/users";
+import FallBack from "~/components/Fallback";
 
 const Card: Component<{ name: string; phone: string; src?: string }> = (
   props,
@@ -21,19 +22,6 @@ const Card: Component<{ name: string; phone: string; src?: string }> = (
         </div>
       </div>
     </>
-  );
-};
-
-/**
- * This is a fallback componen, useful for showing when data is Loading
- * @param props
- * @returns JSX.Component
- */
-const FallBack: Component<{}> = (props) => {
-  return (
-    <div class="text-center place-items-center">
-      <span class="loading loading-ring loading-xl"></span>
-    </div>
   );
 };
 

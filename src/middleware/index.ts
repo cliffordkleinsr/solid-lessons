@@ -7,6 +7,7 @@ export default createMiddleware({
   // console.log("Request received:", event.request.url);
   // event.locals.startTime = Date.now();
   onBeforeResponse: (event) => {
+    // console.log("All cookies:", event.nativeEvent.headers.get("cookie"));
     //todo
     // const endTime = Date.now();
     // const duration = endTime - event.locals.startTime;
