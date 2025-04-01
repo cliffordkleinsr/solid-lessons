@@ -80,30 +80,38 @@ export default function Nav() {
                 </Dropdown>
                 <Dropdown name="VanillaJS">
                   <li>
-                    <a
+                    <A
                       class="text-gray-500 transition hover:text-gray-500/75"
                       href="/vanilla/activetable"
                     >
                       Active table
-                    </a>
+                    </A>
                   </li>
                   <li>
-                    <a
+                    <A
                       class="text-gray-500 transition hover:text-gray-500/75"
                       href="/vanilla/charts "
                     >
                       D3 Charts
-                    </a>
+                    </A>
                   </li>
                 </Dropdown>
                 <Dropdown name="Animations">
                   <li>
-                    <a
+                    <A
                       class="text-gray-500 transition hover:text-gray-500/75"
                       href="/animations/tailwind-motion"
                     >
                       Tailwind Motion
-                    </a>
+                    </A>
+                  </li>
+                  <li>
+                    <A
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      href="/animations/solid-motion"
+                    >
+                      Solid Motion
+                    </A>
                   </li>
                 </Dropdown>
                 <li>
