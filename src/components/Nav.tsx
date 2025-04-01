@@ -96,16 +96,16 @@ export default function Nav() {
                     </a>
                   </li>
                 </Dropdown>
-
-                <li>
-                  <a
-                    class="text-gray-500 transition hover:text-gray-500/75"
-                    href="/animations"
-                  >
-                    Animations
-                  </a>
-                </li>
-
+                <Dropdown name="Animations">
+                  <li>
+                    <a
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      href="/animations/tailwind-motion"
+                    >
+                      Tailwind Motion
+                    </a>
+                  </li>
+                </Dropdown>
                 <li>
                   <a
                     class="text-gray-500 transition hover:text-gray-500/75"

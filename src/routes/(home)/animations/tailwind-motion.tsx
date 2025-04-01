@@ -1,9 +1,11 @@
 import { createEffect, createSignal } from "solid-js";
 import LayoutAnimation from "~/components/anims/Layout";
+import ScrollTriggered from "~/components/anims/ScrollTriggered";
 import SharedLayout from "~/components/anims/SharedLayout";
 
 export default function Animations(props: any) {
   const [show, setShow] = createSignal(true);
+  const [exit, setExit] = createSignal(true);
   createEffect(() => {
     if (show()) {
       setTimeout(() => setShow(!show()), 2200);
@@ -11,6 +13,10 @@ export default function Animations(props: any) {
   });
   return (
     <>
+      <h1 class="text-2xl text-center py-5">Tailwind Motion</h1>
+      <p class="text-center italic">
+        Known limitations: Cant do keyframes animations
+      </p>
       <div class=" place-items-center py-10 space-y-5">
         <p>{String(show())}</p>
         <h1 class="text-xl">Base Animation</h1>
@@ -32,6 +38,18 @@ export default function Animations(props: any) {
         <LayoutAnimation />
         <h1 class="text-xl">Shared Layout Animations</h1>
         <SharedLayout />
+        <h1 class="text-xl">Exit animations</h1>
+        <div
+          class="size-24 bg-blue-400 rounded-sm motion-ease-in-out-cubic motion-duration-200"
+          classList={{
+            "motion-scale-in-0": exit(),
+            "motion-scale-out-0": !exit(),
+          }}
+        ></div>
+        <button class="btn" onClick={() => setExit(!exit())}>
+          {exit() ? "Hide" : "Show"}
+        </button>
+        {/* <ScrollTriggered /> */}
       </div>
     </>
   );

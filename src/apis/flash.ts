@@ -1,9 +1,7 @@
 import { query } from "@solidjs/router";
-import { FetchEvent } from "bun";
-import { createEffect } from "solid-js";
 import { getRequestEvent } from "solid-js/web";
 import { toast } from "solid-sonner";
-import { getCookie, getEvent, HTTPEvent } from "vinxi/http";
+import { getCookie, HTTPEvent } from "vinxi/http";
 
 export const setFlashCookieHeader = (
   message: string,
