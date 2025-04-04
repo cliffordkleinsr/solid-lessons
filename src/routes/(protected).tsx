@@ -31,6 +31,10 @@ export default function ProtectedLayout(props: RouteSectionProps) {
           {" "}
           Home
         </A>
+        <A href="/backend" class="text-gray-500 transition hover:text-gray-500/75">
+          {" "}
+          Backend
+        </A>
         <A
           class="text-gray-500 transition hover:text-gray-500/75"
           classList={{

@@ -9,7 +9,7 @@ export const setFlashCookieHeader = (
   age: string = "5",
 ): ResponseInit["headers"] => {
   const headers = new Headers({
-    "Set-Cookie": `flash=${message}_${type}; Max-Age=${age}`,
+    "Set-Cookie": `flash=${message}_${type}; Max-Age=${age}; HttpOnly`,
   });
   return headers;
 };

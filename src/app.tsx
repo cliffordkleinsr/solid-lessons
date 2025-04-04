@@ -5,6 +5,7 @@ import Nav from "~/components/Nav";
 import "./app.css";
 import { Toaster } from "solid-sonner";
 import RenderScan from "./components/renderscan/RenderScan";
+import { FlashContextProvider } from "./context/FlashContext";
 
 export default function App() {
   return (
@@ -15,7 +16,13 @@ export default function App() {
             <RenderScan />
           </Show>
           <Toaster richColors />
-          <Suspense>{props.children}</Suspense>
+          
+            <Suspense>
+            <FlashContextProvider>
+                {props.children}
+            </FlashContextProvider>
+            </Suspense>
+          
         </>
       )}
     >
