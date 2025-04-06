@@ -5,7 +5,7 @@ import {
   useLocation,
 } from "@solidjs/router";
 import { gsap } from "gsap";
-import { Flip } from "gsap/dist/Flip";
+import { Flip } from "gsap/Flip";
 import { createEffect, onMount } from "solid-js";
 
 export default function FlipLayout(props: RouteSectionProps) {
