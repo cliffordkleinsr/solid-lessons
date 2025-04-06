@@ -1,15 +1,17 @@
 import { MetaProvider } from "@solidjs/meta";
 import { createAsync, RouteSectionProps } from "@solidjs/router";
-import { createEffect, onCleanup, Show } from "solid-js";
+import { createEffect, onCleanup, onMount, Show } from "solid-js";
 import { getStatus, setFlash } from "~/apis/flash";
 import Nav from "~/components/Nav";
+import { useFlashToast } from "~/context/flashes";
 
 export default function HomeLayout(props: RouteSectionProps) {
-  const flash = createAsync(() => getStatus());
-  createEffect(() => {
-    const timer = setFlash(flash());
-    onCleanup(() => clearTimeout(timer));
-  });
+  // onMount(() => {
+  //   const flash = getStatus();
+  //   const timer = setFlash(flash);
+  //   onCleanup(() => clearTimeout(timer));
+  // });
+  useFlashToast();
   return (
     <>
       <MetaProvider>

@@ -2,28 +2,27 @@ import { query } from "@solidjs/router";
 import { getRequestEvent } from "solid-js/web";
 import { toast } from "solid-sonner";
 import { getCookie, HTTPEvent } from "vinxi/http";
-
+import { parse, serialize } from "cookie-es";
 export const setFlashCookieHeader = (
   message: string,
   type: string,
   age: string = "5",
 ): ResponseInit["headers"] => {
   const headers = new Headers({
-    "Set-Cookie": `flash=${message}_${type}; Max-Age=${age}; HttpOnly`,
+    "Set-Cookie": `flash=${message}_${type}; Max-Age=${age}`,
   });
   return headers;
 };
 /**
  *  Get flash message from cookie
  */
-export const getStatus = query(async () => {
-  "use server";
-  const fetchEvent = getRequestEvent();
-  const event = fetchEvent?.nativeEvent as HTTPEvent;
-  const flash = getCookie(event, "flash");
-  // console.log(flash)
-  return flash;
-}, "flash");
+export const getStatus = () => {
+  // const fetchEvent = getRequestEvent();
+  // const event = fetchEvent?.nativeEvent as HTTPEvent;
+  const cookies = parse(document.cookie);
+  console.log(cookies["flash"]);
+  return cookies["flash"];
+};
 
 /**
  * Set the flash using a toast

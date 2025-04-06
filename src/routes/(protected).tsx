@@ -2,28 +2,39 @@ import {
   A,
   action,
   createAsync,
+  query,
+  redirect,
   RouteSectionProps,
   useAction,
   useLocation,
 } from "@solidjs/router";
-import { createEffect, onCleanup } from "solid-js";
+import { createEffect, onCleanup, onMount } from "solid-js";
 import { toast } from "solid-sonner";
 import { getEvent } from "vinxi/http";
 
-import { logout } from "~/apis/auth";
-import { getStatus, setFlash } from "~/apis/flash";
+import { getSession, logout } from "~/apis/auth";
+import { getStatus, setFlash, setFlashCookieHeader } from "~/apis/flash";
 import ModeToggle from "~/components/ModeToggle";
+import { useFlashToast } from "~/context/flashes";
+import { TodoContextProvider } from "~/context/TodoContext";
+
+const checkifAllowed = query(async () => {
+  "use server";
+  const session = await getSession();
+  if (!session.data.user) {
+    return redirect("/");
+  }
+}, "checkifAllowed");
 
 export default function ProtectedLayout(props: RouteSectionProps) {
-  const flash = createAsync(() => getStatus());
+  createAsync(() => checkifAllowed());
+
   const location = useLocation();
   const active = (path: string) => path === location.pathname;
-  createEffect(() => {
-    const timer = setFlash(flash());
-    onCleanup(() => clearTimeout(timer));
-  });
 
   const logoutAction = useAction(action(logout));
+
+  useFlashToast();
   return (
     <>
       <div class="navbar bg-neutral text-neutral-content flex gap-2">
@@ -31,7 +42,10 @@ export default function ProtectedLayout(props: RouteSectionProps) {
           {" "}
           Home
         </A>
-        <A href="/backend" class="text-gray-500 transition hover:text-gray-500/75">
+        <A
+          href="/backend"
+          class="text-gray-500 transition hover:text-gray-500/75"
+        >
           {" "}
           Backend
         </A>
@@ -56,7 +70,7 @@ export default function ProtectedLayout(props: RouteSectionProps) {
           <ModeToggle />
         </div>
       </div>
-      {props.children}
+      <TodoContextProvider>{props.children}</TodoContextProvider>
     </>
   );
 }

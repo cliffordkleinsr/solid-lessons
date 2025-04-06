@@ -1,4 +1,10 @@
-import { createAsync, query, redirect, useSubmission } from "@solidjs/router";
+import {
+  createAsync,
+  query,
+  redirect,
+  useSearchParams,
+  useSubmission,
+} from "@solidjs/router";
 import { Show } from "solid-js";
 import { getEvent } from "vinxi/http";
 import { getSession, superLogin } from "~/apis/auth";

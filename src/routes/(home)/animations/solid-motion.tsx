@@ -1,55 +1,53 @@
 import { Motion, Presence } from "solid-motionone";
 import { Component, createSignal, JSX, Show } from "solid-js";
 
-
-
-const container:JSX.CSSProperties = {
+const container: JSX.CSSProperties = {
   display: "flex",
-  width: '100px',
-  height: '160px',
+  width: "100px",
+  height: "160px",
   "flex-direction": "column",
-  position: "relative"
-}
+  position: "relative",
+};
 const button: JSX.CSSProperties = {
- 'background-color': "#0cdcf7",
- 'border-radius': "10px",
+  "background-color": "#0cdcf7",
+  "border-radius": "10px",
   padding: "10px 20px",
   color: "#0f1115",
-  position: 'absolute',
+  position: "absolute",
   bottom: 0,
   left: 0,
-  right: 0
-}
+  right: 0,
+};
 const box2 = {
-  width: '100px',
-  height: '100px',
-  'background-color': "#0cdcf7",
-  'border-radius': "10px",
-}
+  width: "100px",
+  height: "100px",
+  "background-color": "#0cdcf7",
+  "border-radius": "10px",
+};
 const ExitAnimation: Component<{}> = (props) => {
-  const [isVisible, setIsVisible] = createSignal(true)
+  const [isVisible, setIsVisible] = createSignal(true);
 
   return (
     <>
-    <div style={container}>
-      <Presence>
-        <Show when={isVisible()}>
-        <Motion.div
+      <div style={container}>
+        <Presence>
+          <Show when={isVisible()}>
+            <Motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
               style={box2}
-          />
-        </Show>
-      </Presence>
-      <Motion.button
+            />
+          </Show>
+        </Presence>
+        <Motion.button
           style={button}
           onClick={() => setIsVisible(!isVisible())}
           press={{ y: 1 }}
-      >
+        >
           {isVisible() ? "Hide" : "Show"}
-      </Motion.button>
-    </div>
+        </Motion.button>
+      </div>
     </>
   );
 };
@@ -101,19 +99,19 @@ export default function SolidMotion() {
         <ExitAnimation />
         <h1 class="text-xl py-10">KeyFrames</h1>
         <Motion.div
-            animate={{
-                scale: [1, 2, 2, 1, 1],
-                rotate: [0, 0, 180, 180, 0],
-                borderRadius: ["0%", "0%", "50%", "50%", "0%"],
-            }}
-            transition={{
-                duration: 2,
-                easing: "ease-in-out",
-                offset:[0, 0.2, 0.5, 0.8, 1],
-                repeat: 2,
-                delay:1
-            }}
-            style={box}
+          animate={{
+            scale: [1, 2, 2, 1, 1],
+            rotate: [0, 0, 180, 180, 0],
+            borderRadius: ["0%", "0%", "50%", "50%", "0%"],
+          }}
+          transition={{
+            duration: 2,
+            easing: "ease-in-out",
+            offset: [0, 0.2, 0.5, 0.8, 1],
+            repeat: 2,
+            delay: 1,
+          }}
+          style={box}
         />
       </div>
     </>

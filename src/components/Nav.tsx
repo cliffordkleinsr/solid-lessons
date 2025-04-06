@@ -113,6 +113,24 @@ export default function Nav() {
                       Solid Motion
                     </A>
                   </li>
+                  <li>
+                    <A
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      href="/animations/gsap"
+                    >
+                      Gsap
+                    </A>
+                  </li>
+                </Dropdown>
+                <Dropdown name="View transitions">
+                  <li>
+                    <A
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      href="/transitions/gsap"
+                    >
+                      Gsap
+                    </A>
+                  </li>
                 </Dropdown>
                 <li>
                   <a
