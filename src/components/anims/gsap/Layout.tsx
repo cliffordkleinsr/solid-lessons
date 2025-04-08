@@ -19,17 +19,23 @@ const handle: JSX.CSSProperties = {
 const Layout: Component<{}> = (props) => {
   const [isOn, setIsOn] = createSignal(false);
   const toggleSwitch = () => {
-    // setIsOn(!isOn)
-    setIsOn(!isOn);
+   
     if (!isOn()) {
+      setIsOn(!isOn())
       gsap.to("#knob", {
         x: 50,
+        ease: 'elastic.out(1, 5)'
       });
     } else if (isOn()) {
-      gsap.to(
+      setIsOn(!isOn())
+      gsap.fromTo(
         "#knob",
         {
+          x: 50,
+        },
+        {
           x: 0,
+          ease: 'elastic.out(1, 5)'
         }
       );
     }
@@ -38,6 +44,7 @@ const Layout: Component<{}> = (props) => {
     <button style={container} onClick={toggleSwitch}>
       <div id="knob" style={handle}></div>
     </button>
+    
   );
 };
 

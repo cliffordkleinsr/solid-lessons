@@ -1,6 +1,8 @@
 import gsap from "gsap";
 import { Setter } from "solid-js";
-function keyFrames() {
+
+// timeline based keyframes
+function tlKeyFrames() {
   const tl = gsap.timeline({ repeat: 1, yoyo: true, delay: 1 });
   tl.to("#keyframe", {
     scale: 1,
@@ -20,6 +22,22 @@ function keyFrames() {
       borderRadius: "0%",
     });
   return tl;
+}
+
+// Array-based keyframes
+function arKeyframes() {
+  gsap.to('#arkeyframe', {
+    keyframes: {
+      scale: [1, 2, 2, 1, 1],
+      borderRadius: ["0%", "0%", "50%", "50%", "0%"],
+      rotate: [0, 0, 180, 180, 0]
+    },
+    repeat: 1,
+    yoyo: true,
+    delay: 1,
+    duration: 2
+  })
+  
 }
 
 function gestureAnimations(ref: HTMLDivElement) {
@@ -53,7 +71,7 @@ function presenceOut(setter: Setter<boolean>) {
   gsap.to("#presence", {
     opacity: 0,
     scale: 0,
-    ease: "back.out",
+    ease: "elastic.out(1, 1)",
     onComplete: () => {
       setter(false);
     },
@@ -70,8 +88,8 @@ function presenceIn() {
     {
       opacity: 1,
       scale: 1,
-      ease: "back.in",
+      ease: "elastic.in(1, 1)",
     },
   );
 }
-export { keyFrames, gestureAnimations, presenceOut, presenceIn };
+export { arKeyframes, tlKeyFrames, gestureAnimations, presenceOut, presenceIn };

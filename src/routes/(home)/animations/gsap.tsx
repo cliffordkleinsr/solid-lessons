@@ -2,9 +2,10 @@ import { gsap } from "gsap";
 import { createSignal, JSX, onCleanup, onMount, Show } from "solid-js";
 import {
   gestureAnimations,
-  keyFrames,
+  tlKeyFrames,
   presenceIn,
   presenceOut,
+  arKeyframes,
 } from "~/components/anims/gsap/base_animations";
 import Layout from "~/components/anims/gsap/Layout";
 
@@ -69,8 +70,9 @@ export default function Gsap() {
         { scale: 0, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" },
       );
-      // keyframes
-      tl = keyFrames();
+      // timeline based keyframes
+      tl = tlKeyFrames();
+      arKeyframes()
       // gestures
       gestureAnimations(gestures_ref);
       tl.pause();
@@ -97,11 +99,15 @@ export default function Gsap() {
         </button>
       </div>
       <div class="space-y-6 place-items-center">
-        <h1 class="text-xl py-5">KeyFrames</h1>
+        <h1 class="text-xl py-5">Timeline Based KeyFrames</h1>
         <div id="keyframe" style={box}></div>
         <button class="btn" onClick={() => tl.restart()}>
           Start Keyframes
         </button>
+      </div>
+      <div class="space-y-6 place-items-center">
+        <h1 class="text-xl py-5">Array Based KeyFrames</h1>
+        <div id="arkeyframe" style={box}></div>
       </div>
       <h1 class="text-xl py-10">Layout Animations</h1>
       <Layout />
