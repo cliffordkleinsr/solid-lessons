@@ -6,8 +6,10 @@ import {
   presenceIn,
   presenceOut,
   arKeyframes,
+  bouncyBtn,
 } from "~/components/anims/gsap/base_animations";
 import Layout from "~/components/anims/gsap/Layout";
+import SharedLayout from "~/components/anims/gsap/SharedLayout";
 
 const box: JSX.CSSProperties = {
   width: "100px",
@@ -50,7 +52,7 @@ const container: JSX.CSSProperties = {
 export default function Gsap() {
   let ctx: gsap.Context;
   let gestures_ref!: HTMLDivElement;
-
+  let btn_ref!: HTMLButtonElement;
   const [isVisible, setIsVisible] = createSignal(true);
   function presenceWrapper() {
     if (isVisible()) {
@@ -72,9 +74,11 @@ export default function Gsap() {
       );
       // timeline based keyframes
       tl = tlKeyFrames();
-      arKeyframes()
+      arKeyframes();
       // gestures
       gestureAnimations(gestures_ref);
+      // bouncy button
+      bouncyBtn(btn_ref);
       tl.pause();
     });
     onCleanup(() => ctx.revert());
@@ -94,7 +98,7 @@ export default function Gsap() {
         <Show when={isVisible()}>
           <div id="presence" style={box2}></div>
         </Show>
-        <button style={button} onClick={presenceWrapper}>
+        <button ref={btn_ref} id="btn" style={button} onClick={presenceWrapper}>
           {isVisible() ? "Hide" : "Show"}
         </button>
       </div>
@@ -111,6 +115,8 @@ export default function Gsap() {
       </div>
       <h1 class="text-xl py-10">Layout Animations</h1>
       <Layout />
+      <h1 class="text-xl py-10">Shared Layout Animations</h1>
+      <SharedLayout />
     </div>
   );
 }

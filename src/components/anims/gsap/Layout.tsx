@@ -1,5 +1,40 @@
-import { Component, createSignal, JSX } from "solid-js";
+import { Component, createEffect, createSignal, JSX } from "solid-js";
 import gsap from "gsap";
+import { Flip } from "gsap/Flip";
+
+const Layout: Component<{}> = (props) => {
+  const [isOn, setIsOn] = createSignal(false);
+  const toggleSwitch = () => {
+    // Get the current state
+    const state = Flip.getState("#knob");
+    // Make your state changes
+    setIsOn(!isOn());
+
+    // animate from the previous state to the current one:
+    Flip.from(state, {
+      duration: 0.4,
+      ease: "elastic.out(1, 5)",
+    });
+  };
+
+  createEffect(() => {
+    gsap.registerPlugin(Flip);
+  });
+  return (
+    <button
+      style={{
+        ...container,
+        "justify-content": `flex-${isOn() ? "end" : "start"}`,
+      }}
+      onClick={toggleSwitch}
+    >
+      <div id="knob" style={handle}></div>
+    </button>
+  );
+};
+
+export default Layout;
+
 const container: JSX.CSSProperties = {
   all: "unset",
   width: "100px",
@@ -16,36 +51,3 @@ const handle: JSX.CSSProperties = {
   "background-color": "#9911ff",
   "border-radius": "50%",
 };
-const Layout: Component<{}> = (props) => {
-  const [isOn, setIsOn] = createSignal(false);
-  const toggleSwitch = () => {
-   
-    if (!isOn()) {
-      setIsOn(!isOn())
-      gsap.to("#knob", {
-        x: 50,
-        ease: 'elastic.out(1, 5)'
-      });
-    } else if (isOn()) {
-      setIsOn(!isOn())
-      gsap.fromTo(
-        "#knob",
-        {
-          x: 50,
-        },
-        {
-          x: 0,
-          ease: 'elastic.out(1, 5)'
-        }
-      );
-    }
-  };
-  return (
-    <button style={container} onClick={toggleSwitch}>
-      <div id="knob" style={handle}></div>
-    </button>
-    
-  );
-};
-
-export default Layout;

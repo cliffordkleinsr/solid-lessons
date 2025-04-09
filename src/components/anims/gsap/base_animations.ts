@@ -26,18 +26,17 @@ function tlKeyFrames() {
 
 // Array-based keyframes
 function arKeyframes() {
-  gsap.to('#arkeyframe', {
+  gsap.to("#arkeyframe", {
     keyframes: {
       scale: [1, 2, 2, 1, 1],
       borderRadius: ["0%", "0%", "50%", "50%", "0%"],
-      rotate: [0, 0, 180, 180, 0]
+      rotate: [0, 0, 180, 180, 0],
     },
     repeat: 1,
     yoyo: true,
     delay: 1,
-    duration: 2
-  })
-  
+    duration: 2,
+  });
 }
 
 function gestureAnimations(ref: HTMLDivElement) {
@@ -49,6 +48,7 @@ function gestureAnimations(ref: HTMLDivElement) {
     duration: 0.4,
     ease: "power2.out",
   });
+  // chain events to achieve any behaviour you want
   ref.addEventListener("mouseenter", () => {
     quickScaleX(1.2);
     quickScaleY(1.2);
@@ -67,6 +67,19 @@ function gestureAnimations(ref: HTMLDivElement) {
   });
 }
 
+function bouncyBtn(ref: HTMLButtonElement) {
+  let tapY = gsap.quickTo(ref, "y", {
+    duration: 0.1,
+    ease: "bounce",
+  });
+  // chain events to achieve any behaviour you want
+  ref.addEventListener("mousedown", () => {
+    tapY(1);
+  });
+  ref.addEventListener("mouseup", () => {
+    tapY(0);
+  });
+}
 function presenceOut(setter: Setter<boolean>) {
   gsap.to("#presence", {
     opacity: 0,
@@ -92,4 +105,11 @@ function presenceIn() {
     },
   );
 }
-export { arKeyframes, tlKeyFrames, gestureAnimations, presenceOut, presenceIn };
+export {
+  arKeyframes,
+  tlKeyFrames,
+  gestureAnimations,
+  bouncyBtn,
+  presenceOut,
+  presenceIn,
+};
