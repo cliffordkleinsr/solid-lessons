@@ -69,7 +69,7 @@ function gestureAnimations(ref: HTMLDivElement) {
 
 function bouncyBtn(ref: HTMLButtonElement) {
   let tapY = gsap.quickTo(ref, "y", {
-    duration: 0.1,
+    duration: 0.09,
     ease: "bounce",
   });
   // chain events to achieve any behaviour you want

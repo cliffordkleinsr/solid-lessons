@@ -9,9 +9,11 @@ import {
   bouncyBtn,
 } from "~/components/anims/gsap/base_animations";
 import Layout from "~/components/anims/gsap/Layout";
+import Numbers from "~/components/anims/gsap/numbers";
 import Progress from "~/components/anims/gsap/Progress";
+import ScrollTriggered from "~/components/anims/gsap/ScrollTrigger";
 import SharedLayout from "~/components/anims/gsap/SharedLayout";
-import ScrollTriggered from "~/components/anims/ScrollTriggered";
+
 
 
 const box: JSX.CSSProperties = {
@@ -90,6 +92,9 @@ export default function Gsap() {
   return (
     <div class="place-items-center py-10 space-y-5">
       <h1 class="text-2xl text-center py-5 rounded-sm">GSAP</h1>
+      <p class="text-center italic">
+        Can do all animations
+      </p>
       <h1 class="text-xl">Base Animation</h1>
       <div id="rotate" style={box}></div>
       <h1 class="text-xl">Enter animation</h1>
@@ -120,10 +125,12 @@ export default function Gsap() {
       <Layout />
       <h1 class="text-xl py-10">Shared Layout Animations</h1>
       <SharedLayout />
-      <h1>Scroll Progress</h1>
+      <h1 class="text-xl py-10">Scroll Progress</h1>
       <Progress />
-      <h1>Scroll Triggered</h1>
+      <h1 class="text-xl py-10">Scroll Triggered</h1>
       <ScrollTriggered />
+      <h1 class="text-xl py-10">Price Switcher</h1>
+      <Numbers/>
     </div>
   );
 }

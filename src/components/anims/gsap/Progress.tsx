@@ -29,7 +29,7 @@ const Progress: Component<{}> = (props) => {
             height: "10px",
             "background-color": "#ff0088",
         }}></div>
-        <article id="article" style={article}>
+        <article id="article" style={article} class="prose">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac
             rhoncus quam.

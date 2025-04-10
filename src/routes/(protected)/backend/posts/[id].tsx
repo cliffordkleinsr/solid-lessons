@@ -1,7 +1,11 @@
-import { createAsync, useParams } from "@solidjs/router";
+import { createAsync, RouteDefinition, useParams } from "@solidjs/router";
 import { Component, For, Suspense } from "solid-js";
 import { getPosts } from "~/apis/posts";
 import FallBack from "~/components/Fallback";
+
+export const route =  {
+  preload: ({ params }) => getPosts(params.id)
+} satisfies RouteDefinition
 
 export default function BrekoutRoute() {
   const params = useParams();

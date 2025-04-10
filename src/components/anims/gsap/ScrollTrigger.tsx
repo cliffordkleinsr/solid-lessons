@@ -1,14 +1,90 @@
-import { Component, For, JSX } from "solid-js";
+import { Component, For, JSX, onMount } from "solid-js";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const ScrollTriggered: Component<{}> = (props) => {
-  
+  onMount(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const cards:HTMLDivElement[] = gsap.utils.toArray('#card')
+
+
+    cards.forEach((card) => {
+        gsap.set(card, {
+            y: 300 // Initial state like Framer's "offscreen"
+        })
+
+        // with timeline
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: "top center",
+            end: () => `+=${card.offsetHeight}`,
+            scroller: "#container2",
+            // markers: true,
+            toggleActions: "play reverse play reverse", // like onEnter/onLeave/onEnterBack/onLeaveBack
+          },
+        });
+    
+        tl.to(card, {
+          y: 50,
+          rotate: -10,
+          ease: "power1.out",
+          duration: 0.4,
+        });
+        // with schroll trigger
+    //    ScrollTrigger.create({
+    //         trigger: card,
+    //         start: "top center",
+    //         end: "bottom center",
+    //         scroller: '#container2',
+    //         scrub:true,
+    //         onEnter: () => {
+    //             gsap.to(card, {
+    //                 y: 50,
+    //                 rotate: -10,
+    //                 ease: 'power1.in',
+    //                 duration:0.4
+    //             })
+    //         },
+    //         onLeave: () => {
+    //             gsap.to(card,
+    //             {
+    //                 y:300,
+    //                 rotate:0,
+    //                 ease: 'power1.out',
+                    
+    //             })
+    //         },
+    //         onEnterBack: () => {
+    //             gsap.to(card, {
+    //                 y: 50,
+    //                 rotate: -10,
+    //                 ease: 'power1.in',
+    //                 duration:0.4
+    //             })
+    //         },
+    //         onLeaveBack:() => {
+    //             gsap.to(card,
+    //                 {
+    //                     y:300,
+    //                     rotate:0,
+    //                     ease: 'power1.out',
+                        
+    //                 })
+    //         },
+    //         // scrub: true,
+    //         // markers: true
+    //    })
+    })
+  })
   return (
-    <div style={container}>
+    <div style={container} id="container2">
         <For each={food}>{
             ([emoji, hueA, hueB]) =>  (
                 <Card emoji={emoji} hueA={hueA} hueB={hueB} />
             )    
         }</For>
+        <div class=" py-30"></div>
     </div>
   );
 };
@@ -22,7 +98,7 @@ const Card: Component<CardProps> = (props) => {
     style={cardContainer}
     >
         <div style={{...splash, background}}></div>
-        <div style={card}>
+        <div style={card} id="card">
             {props.emoji}
         </div>
     </div>
@@ -57,6 +133,8 @@ const container: JSX.CSSProperties = {
     'max-width': '500px',
    'padding-bottom': '100px',
     width: "100%",
+    overflow:'auto',
+    height: '650px'
 }
 
 const cardContainer: JSX.CSSProperties = {
