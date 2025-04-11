@@ -18,8 +18,9 @@ const Progress: Component<{}> = (props) => {
   });
   return (
     <>
-    <div class="h-[500px] overflow-auto relative" id="container">
-        <div style={{
+      <div class="h-[500px] overflow-auto relative" id="container">
+        <div
+          style={{
             transform: `scaleX(${perc()})`,
             "transform-origin": "left",
             position: "sticky",
@@ -28,7 +29,8 @@ const Progress: Component<{}> = (props) => {
             right: 0,
             height: "10px",
             "background-color": "#ff0088",
-        }}></div>
+          }}
+        ></div>
         <article id="article" style={article} class="prose">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac
@@ -167,7 +169,7 @@ const Progress: Component<{}> = (props) => {
           </p>
           <p>Quisque convallis ligula non magna efficitur tincidunt.</p>
         </article>
-        </div>
+      </div>
     </>
   );
 };
@@ -182,4 +184,3 @@ const article: JSX.CSSProperties = {
   "flex-direction": "column",
   gap: "20",
 };
-

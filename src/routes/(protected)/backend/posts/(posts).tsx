@@ -3,9 +3,9 @@ import { For, Suspense } from "solid-js";
 import { getAllPosts } from "~/apis/posts";
 import FallBack from "~/components/Fallback";
 
-export const route =  {
-  preload: () => getAllPosts()
-} satisfies RouteDefinition
+export const route = {
+  preload: () => getAllPosts(),
+} satisfies RouteDefinition;
 export default function PostsRoot() {
   const posts = createAsync(() => getAllPosts());
   return (
