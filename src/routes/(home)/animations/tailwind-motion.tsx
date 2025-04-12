@@ -34,9 +34,9 @@ export default function Animations(props: any) {
         </button>
         <h1 class="text-xl">Gestures</h1>
         <div class="size-24 bg-purple-600 rounded-sm hover:motion-scale-out-110 motion-scale-in-110 motion-ease-spring-bouncy motion-duration-200"></div>
-        <h1 class="text-xl">Layout Animations</h1>
+        <h1 class="text-xl">Layout Animations (faked)</h1>
         <LayoutAnimation />
-        <h1 class="text-xl">Shared Layout Animations</h1>
+        <h1 class="text-xl">Shared Layout Animations (faked)</h1>
         <SharedLayout />
         <h1 class="text-xl">Exit animations</h1>
         <div

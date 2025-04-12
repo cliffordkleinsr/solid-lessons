@@ -6,12 +6,10 @@ const ScrollTriggered: Component<{}> = (props) => {
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger);
     const cards: HTMLDivElement[] = gsap.utils.toArray("#card");
-
+    gsap.set(cards, {
+      y: 300, // Initial state like Framer's "offscreen"
+    });
     cards.forEach((card) => {
-      gsap.set(card, {
-        y: 300, // Initial state like Framer's "offscreen"
-      });
-
       // with timeline
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -111,20 +109,7 @@ const hue = (h: number) => `hsl(${h}, 100%, 50%)`;
 /**
  * ==============   Styles   ================
  */
-const cardVariants = {
-  offscreen: {
-    y: 300,
-  },
-  onscreen: {
-    y: 50,
-    rotate: -10,
-    transition: {
-      type: "spring",
-      bounce: 0.4,
-      duration: 0.8,
-    },
-  },
-};
+
 const container: JSX.CSSProperties = {
   margin: "100px auto",
   "max-width": "500px",

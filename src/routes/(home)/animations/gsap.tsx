@@ -90,8 +90,12 @@ export default function Gsap() {
 
   return (
     <div class="place-items-center py-10 space-y-5">
-      <h1 class="text-2xl text-center py-5 rounded-sm">GSAP</h1>
-      <p class="text-center italic">Can do all animations</p>
+      <h1 class="text-2xl text-center py-2 rounded-sm">GSAP</h1>
+      <p class="text-center italic">Can do all animations </p>
+      <p>
+        Known Limitations: lacks spring like easing and svg drawing out of the
+        box
+      </p>
       <h1 class="text-xl">Base Animation</h1>
       <div id="rotate" style={box}></div>
       <h1 class="text-xl">Enter animation</h1>
