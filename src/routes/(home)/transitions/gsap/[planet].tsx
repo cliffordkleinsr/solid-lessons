@@ -18,11 +18,7 @@ export default function Planet() {
               alt={planet.name}
               data-flip-id={`cover-${planet.name}`}
             />
-            <h1
-              id="title"
-              style={{ "--title": `title-${planet.name}` }}
-              data-flip-id={`title-${planet.name}`}
-            >
+            <h1 id="title" data-flip-id={`title-${planet.name}`}>
               {planet.name}
             </h1>
             <p>{planet.description}</p>

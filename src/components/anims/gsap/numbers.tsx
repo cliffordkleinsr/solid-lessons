@@ -107,12 +107,12 @@ const tabpil: JSX.CSSProperties = {
   color: "black",
 };
 
-const button: JSX.CSSProperties = {
-  color: "black",
-  border: "none",
-  position: "relative",
-  background: "transparent",
-};
+// const button: JSX.CSSProperties = {
+//   color: "black",
+//   border: "none",
+//   position: "relative",
+//   background: "transparent",
+// };
 
 // function unwrapPrevious() {
 //     const pil = document.getElementById('pil');

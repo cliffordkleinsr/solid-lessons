@@ -6,8 +6,10 @@ import {
   WaapiText,
   PresenceAnimation,
 } from "~/components/anims/animejs/all";
+import LayoutAnimation from "~/components/anims/animejs/LayoutAnimation";
 import Progress from "~/components/anims/animejs/Progress";
 import ScrollBasedTrigger from "~/components/anims/animejs/ScrollTrigger";
+import SharedLayoutAnimations from "~/components/anims/animejs/SharedLayoutAnimations";
 
 export default function AnimeJs() {
   return (
@@ -27,6 +29,14 @@ export default function AnimeJs() {
         <GestureAnimation />
         <h2>Exit animations</h2>
         <PresenceAnimation />
+        <h2 class="text-xl py-10">
+          Layout animations (WAAPI + View Transitions API)
+        </h2>
+        <LayoutAnimation />
+        <h2 class="text-xl py-10">
+          Shared Layout Animations (View Transitions API) + WAAPI
+        </h2>
+        <SharedLayoutAnimations />
         <h2>Scroll animations</h2>
         <ScrollBasedTrigger />
         <h2>Progress Scroll animations</h2>

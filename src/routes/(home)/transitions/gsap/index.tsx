@@ -54,11 +54,7 @@ export default function ParentComponent() {
                 alt={name}
                 data-flip-id={`cover-${name}`}
               />
-              <h2
-                id="title"
-                style={{ "--title": `title-${name}` }}
-                data-flip-id={`title-${name}`}
-              >
+              <h2 id="title" data-flip-id={`title-${name}`}>
                 {name}
               </h2>
             </A>
