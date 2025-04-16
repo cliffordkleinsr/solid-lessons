@@ -1,7 +1,7 @@
 import { Component, createEffect, createSignal, JSX } from "solid-js";
 import gsap from "gsap";
 import { Flip } from "gsap/Flip";
-
+// only Composable with direct Dom Manipulation
 const Layout: Component<{}> = (props) => {
   const [isOn, setIsOn] = createSignal(false);
   const toggleSwitch = () => {

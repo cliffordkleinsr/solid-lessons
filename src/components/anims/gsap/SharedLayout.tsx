@@ -9,6 +9,7 @@ import {
 import gsap from "gsap";
 import { Flip } from "gsap/Flip";
 
+// only Composable with direct Dom Manipulation
 const SharedLayout: Component<{}> = (props) => {
   const [selectedTab, setSelectedTab] = createSignal(tabs[0]);
 

@@ -1,53 +1,58 @@
 import { utils, waapi } from "animejs";
-import { Component, createEffect, createSignal, For, JSX } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createSignal,
+  For,
+  JSX,
+  Show,
+} from "solid-js";
+import { flippa, MotionLayoutProvider } from "./flip/layoutshift";
 
+//(Experimental) only Composable with FLow changes i.e if this changes show this
 const SharedLayoutAnimations: Component<{}> = (props) => {
   const [selectedTab, setSelectedTab] = createSignal(tabs[0]);
-  createEffect(() => {
-    const targets = utils.$("#tab");
 
-    targets.forEach((t) => {
-      if (t.innerHTML.split(" ")[1] === selectedTab().label) {
-        // create view transition
-        document.startViewTransition(() => {
-          // updateTheDOMSomehow
-          childEl.style.visibility = "visible";
-          t.appendChild(childEl);
-        });
-      }
-    });
-  });
   function presenceWrapper(item: { icon: string; label: string }) {
     // Don't animate if selecting the same tab
     if (item === selectedTab()) return;
     // Update the selected tab
     setSelectedTab(item);
     waapi.animate("#icon", {
-      y: {
-        from: 10,
-        to: 0,
-        ease: "in(1)",
-      },
-      opacity: {
-        from: 0,
-        to: 1,
-        ease: "out(1)",
-      },
+      y: [10, 0],
+      opacity: [0, 1],
       duration: 200,
+      playbackEase: "outIn(1)",
+      // can also be done this way
+      // y: {
+      //   from: 10,
+      //   to: 0,
+      //   ease: "in(1)",
+      // },
+      // opacity: {
+      //   from: 0,
+      //   to: 1,
+      //   ease: "out(1)",
+      // },
+      // duration: 200,
     });
   }
-  let childEl!: HTMLDivElement;
   return (
     <div style={container}>
       <nav style={nav}>
         <ul style={tabsContainer}>
-          <For each={tabs}>
-            {(item) => (
-              <li id="tab" style={tab} onClick={() => presenceWrapper(item)}>
-                {item.icon + " " + item.label}
-              </li>
-            )}
-          </For>
+          <MotionLayoutProvider>
+            <For each={tabs}>
+              {(item) => (
+                <li id="tab" style={tab} onClick={() => presenceWrapper(item)}>
+                  {item.icon + " " + item.label}
+                  <Show when={item === selectedTab()}>
+                    <flippa.span style={underline} />
+                  </Show>
+                </li>
+              )}
+            </For>
+          </MotionLayoutProvider>
         </ul>
       </nav>
       <main style={iconContainer}>
@@ -55,7 +60,6 @@ const SharedLayoutAnimations: Component<{}> = (props) => {
           {selectedTab() ? selectedTab().icon : "😋"}
         </div>
       </main>
-      <div ref={childEl} style={underline}></div>
     </div>
   );
 };
@@ -120,14 +124,12 @@ const tab: JSX.CSSProperties = {
 };
 
 const underline: JSX.CSSProperties = {
-  "view-transition-name": "underline",
   position: "absolute",
   bottom: "-15px",
   left: 0,
   right: 0,
   height: "2px",
   background: "#00FFFF",
-  visibility: "hidden",
 };
 
 const iconContainer: JSX.CSSProperties = {

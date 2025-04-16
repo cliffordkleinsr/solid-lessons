@@ -1,36 +1,27 @@
 import { createSpring, waapi } from "animejs";
-import { Component, createSignal, JSX } from "solid-js";
+import { Component, createSignal, JSX, Show } from "solid-js";
+import { flippa, MotionLayoutProvider } from "./flip/layoutshift";
 
 const LayoutAnimation: Component<{}> = (props) => {
   const [isOn, setIsOn] = createSignal(false);
   const toggleSwitch = () => {
-    // create view transition
-    const transition = document.startViewTransition(() => setIsOn(!isOn())); //updateTheDOMSomehow
-    // Wait for the pseudo-elements to be created:
-    transition.ready.then(() => {
-      waapi.animate("#knob", {
-        x: {
-          from: 0,
-          to: 1,
-        },
-        ease: createSpring({ stiffness: 150, damping: 3 }),
-        duration: 400,
-      });
-    });
+    setIsOn(!isOn());
   };
   return (
-    <button
-      style={{
-        ...container,
-        "justify-content": `flex-${isOn() ? "end" : "start"}`,
-      }}
-      onClick={toggleSwitch}
-    >
-      <div
-        id="knob"
-        style={{ ...handle, "view-transition-name": "knob" }}
-      ></div>
-    </button>
+    <MotionLayoutProvider>
+      <button style={container} onClick={toggleSwitch}>
+        {/* must be a flow component */}
+        <Show when={isOn()}>
+          <flippa.div
+            id="knob"
+            style={{ ...handle, "margin-left": "auto" }}
+          ></flippa.div>
+        </Show>
+        <Show when={!isOn()}>
+          <flippa.div id="knob" style={handle}></flippa.div>
+        </Show>
+      </button>
+    </MotionLayoutProvider>
   );
 };
 

@@ -29,13 +29,9 @@ export default function AnimeJs() {
         <GestureAnimation />
         <h2>Exit animations</h2>
         <PresenceAnimation />
-        <h2 class="text-xl py-10">
-          Layout animations (WAAPI + View Transitions API)
-        </h2>
+        <h2 class="text-xl py-10">Layout animations (WAAPI)</h2>
         <LayoutAnimation />
-        <h2 class="text-xl py-10">
-          Shared Layout Animations (View Transitions API) + WAAPI
-        </h2>
+        <h2 class="text-xl py-10">Shared Layout Animations (WAAPI)</h2>
         <SharedLayoutAnimations />
         <h2>Scroll animations</h2>
         <ScrollBasedTrigger />
