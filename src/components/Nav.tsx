@@ -129,6 +129,14 @@ export default function Nav() {
                       AnimeJs
                     </A>
                   </li>
+                  <li>
+                    <A
+                      class="text-gray-500 transition hover:text-gray-500/75"
+                      href="/animations/scrollhijack"
+                    >
+                      AnimeJs ScrollHijack
+                    </A>
+                  </li>
                 </Dropdown>
                 <Dropdown name="View transitions">
                   <li>

@@ -7,10 +7,10 @@ import {
 } from "solid-js";
 import { JSX } from "solid-js/jsx-runtime";
 import { createStore, SetStoreFunction } from "solid-js/store";
-import { copyTransformFromRect } from "./utils";
 import { MotionLayoutContextValue, SourceData } from "./types";
-import { eases, waapi } from "animejs";
+import { createTimer, eases, EasingFunction, waapi } from "animejs";
 import { Dynamic } from "solid-js/web";
+import { copyTransformFromRect } from "./utils";
 
 const MotionLayoutContext = createContext<MotionLayoutContextValue>({
   sourceData: {},
@@ -34,11 +34,15 @@ export function MotionLayoutProvider(props: FlowProps) {
 
 function element<T extends keyof JSX.IntrinsicElements>(elementType: T) {
   return function FlippableElement(
-    props: JSX.IntrinsicElements[T] & { ref?: any },
+    props: JSX.IntrinsicElements[T] & { ref?: any } & {
+      ease?: EasingFunction;
+      duration?: number;
+    } & {
+      preserveChild?: boolean;
+    },
   ) {
     const { sourceData, setSourceData } = useContext(MotionLayoutContext);
     let srcRef!: HTMLElement;
-
     onMount(() => {
       if (sourceData.borderRadius && sourceData.domRect) {
         const transform = copyTransformFromRect(
@@ -53,15 +57,50 @@ function element<T extends keyof JSX.IntrinsicElements>(elementType: T) {
           borderRadius: getComputedStyle(srcRef).borderRadius,
         };
 
-        waapi.animate(srcRef, {
-          scaleX: [transform.scaleX, 1],
-          scaleY: [transform.scaleY, 1],
-          x: [transform.translateX, 0],
-          y: [transform.translateY, 0],
-          borderRadius: [sourceData.borderRadius, original.borderRadius],
-          ease: eases.outBack(1),
-          duration: 400,
-        });
+        if (props.preserveChild) {
+          const nodesToMove: Node[] = [];
+          [...srcRef.childNodes].forEach((child) => {
+            const childern = child as HTMLElement;
+            childern.style.zIndex = "20";
+            childern.style.position = "absolute";
+            srcRef.style.pointerEvents = "none";
+            // Only handle Element nodes (not text/comments)
+            if (childern.nodeType === Node.ELEMENT_NODE) {
+              // Move the child before the srcRef in the DOM
+              nodesToMove.push(childern);
+              srcRef.parentNode?.insertBefore(childern, srcRef);
+            }
+          });
+
+          waapi.animate(srcRef, {
+            scaleX: [transform.scaleX, 1],
+            scaleY: [transform.scaleY, 1],
+            x: [transform.translateX, 0],
+            y: [transform.translateY, 0],
+            borderRadius: [sourceData.borderRadius!, original.borderRadius],
+            ease: props.ease ? props.ease : eases.outBack(1),
+            duration: props.duration ? props.duration : 400,
+            onComplete: () => {
+              nodesToMove.forEach((node) => {
+                const childern = node as HTMLElement;
+                childern.style.zIndex = "";
+                childern.style.position = "";
+                srcRef.style.pointerEvents = "";
+                srcRef.appendChild(node);
+              });
+            },
+          });
+        } else {
+          waapi.animate(srcRef, {
+            scaleX: [transform.scaleX, 1],
+            scaleY: [transform.scaleY, 1],
+            x: [transform.translateX, 0],
+            y: [transform.translateY, 0],
+            borderRadius: [sourceData.borderRadius, original.borderRadius],
+            ease: props.ease ? props.ease : eases.outBack(1),
+            duration: props.duration ? props.duration : 400,
+          });
+        }
       }
     });
 
@@ -109,6 +148,8 @@ export const flippa = {
   a: element("a"),
   section: element("section"),
   article: element("article"),
+  li: element("li"),
+  form: element('form'),
   // Add more element types as needed
 
   // Generic function to create custom flippable elements on demand

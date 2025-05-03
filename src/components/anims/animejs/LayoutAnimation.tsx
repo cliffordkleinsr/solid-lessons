@@ -11,14 +11,13 @@ const LayoutAnimation: Component<{}> = (props) => {
     <MotionLayoutProvider>
       <button style={container} onClick={toggleSwitch}>
         {/* must be a flow component */}
-        <Show when={isOn()}>
+        <Show when={isOn()} fallback={
+          <flippa.div id="knob" style={handle}></flippa.div>
+        }>
           <flippa.div
             id="knob"
             style={{ ...handle, "margin-left": "auto" }}
           ></flippa.div>
-        </Show>
-        <Show when={!isOn()}>
-          <flippa.div id="knob" style={handle}></flippa.div>
         </Show>
       </button>
     </MotionLayoutProvider>

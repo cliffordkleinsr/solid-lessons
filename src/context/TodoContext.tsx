@@ -12,7 +12,10 @@ type TodoContextType = {
   setTodo: SetStoreFunction<Todos>;
 };
 
-export const TodoContext = createContext<TodoContextType>();
+export const TodoContext = createContext<TodoContextType>({
+  todos: [],
+  setTodo: () => [],
+});
 export const TodoContextProvider: Component<{ children: JSX.Element }> = (
   props,
 ) => {
@@ -29,5 +32,9 @@ export const TodoContextProvider: Component<{ children: JSX.Element }> = (
 };
 
 export const useTodoContext = () => {
-  return useContext(TodoContext);
+  const context = useContext(TodoContext);
+  if (typeof context === "undefined") {
+    throw new Error("useTodoContext must be used within a TodoContextProvider");
+  }
+  return context;
 };

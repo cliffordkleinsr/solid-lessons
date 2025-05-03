@@ -1,3 +1,4 @@
+import Advanced from "~/components/anims/animejs/advanced";
 import {
   TextAnimation,
   EnterAnimation,
@@ -33,6 +34,8 @@ export default function AnimeJs() {
         <LayoutAnimation />
         <h2 class="text-xl py-10">Shared Layout Animations (WAAPI)</h2>
         <SharedLayoutAnimations />
+        <h2 class="text-xl py-10">Advanced Layout Animations (WAAPI)</h2>
+        <Advanced />
         <h2>Scroll animations</h2>
         <ScrollBasedTrigger />
         <h2>Progress Scroll animations</h2>
